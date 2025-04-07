@@ -1,6 +1,6 @@
 import { Logs } from '../util/log.js';
-import AuthUtil from '../util/authUtil.js';
-
+import { PostgresUtils } from '../databases/postgres-utils.js';
+import { UserEvents } from '../../../user-service/app/event/userEvents.js';
 export class BaseRoute {
     constructor(server) {
         this.logs = new Logs();
@@ -10,9 +10,11 @@ export class BaseRoute {
             'createPuts',
             'createDel',
         ]);
-        this.authUtil = new AuthUtil();
+
         this.server = server;
         this.baseRoute = '/user-service';
+        this.pg = new PostgresUtils();
+        this.userEvents = new UserEvents();
     }
     createRoutes() {
         this.createGets();
@@ -25,37 +27,5 @@ export class BaseRoute {
     }
     bindMethods(methods) {
         methods.forEach((item) => this.bindMethod(item));
-    }
-    async updateRoute(req, res, route) {
-        if (this.authUtil.isLoginIn(req)) {
-            const data = await this.apix.putCall(
-                `/${route}/${req.params.id}`,
-                req.body,
-            );
-            res.json(data);
-        } else {
-            res.json(401);
-        }
-    }
-    async createRoute(req, res, route) {
-        try {
-            const data = await this.apix.postCall(`/${route}`, req.body);
-            res.json(data);
-        } catch (error) {
-            this.logs.error(error);
-            res.json(500);
-        }
-    }
-    async getRoute(req, res, route) {
-        if (this.authUtil.isLoginIn(req)) {
-            let ids = '';
-            if (req.params.id) {
-                ids = `/${req.params.id}`;
-            }
-            const data = await this.apix.getCall(`/${route}${ids}`, req.query);
-            res.json(data);
-        } else {
-            res.json(401);
-        }
     }
 }

@@ -5,6 +5,8 @@ import bodyParser from 'body-parser';
 import Setup from './config/setup-context.js';
 import os from 'os';
 import { Healthcheck } from './routes/health-check/health-check.js';
+import { AllEvents } from './consumer/AllEvents.js';
+import { InvoiceRoute } from './routes/invoice/invoices-route.js';
 
 
 /**
@@ -88,7 +90,8 @@ init().then(() => {
      * Import routes
      */
     new Healthcheck(server);
-    
+    new AllEvents();
+    new InvoiceRoute(server);
 
 });
 

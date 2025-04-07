@@ -1,4 +1,13 @@
 {
+    "postgres":{
+        "host":"localhost",
+        "database":"cqrs",
+        "port":"5432"
+    },
     "secret_names": {
+        "postgres":{
+            "user":"",
+            "password":""
+        }
     }
 }

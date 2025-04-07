@@ -1,5 +1,6 @@
 import { Logs } from '../util/log.js';
 import AuthUtil from '../util/authUtil.js';
+import { PostgresUtils } from '../databases/postgres-utils.js';
 
 export class BaseRoute {
     constructor(server) {
@@ -13,6 +14,9 @@ export class BaseRoute {
         this.authUtil = new AuthUtil();
         this.server = server;
         this.baseRoute = '/invoice-service';
+        
+        this.pg = new PostgresUtils();
+
     }
     createRoutes() {
         this.createGets();

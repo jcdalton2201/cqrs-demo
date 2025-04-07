@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import Setup from './config/setup-context.js';
 import os from 'os';
 import { Healthcheck } from './routes/health-check/health-check.js';
+import { UsersRoutes } from './routes/users/users-route.js';
 
 
 /**
@@ -88,6 +89,7 @@ init().then(() => {
      * Import routes
      */
     new Healthcheck(server);
+    new UsersRoutes(server);
     
 
 });

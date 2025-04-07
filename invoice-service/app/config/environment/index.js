@@ -18,7 +18,11 @@ const all = {
         accessFileName: 'invoice-service-access.log',
         level: 'info',
     },
-    
+    postgres: {
+        host: process.env.PGHOST,
+        port: process.env.PGPORT,
+        database: process.env.PGDATABASE
+    },
     secret_names: {},
     
 };
