@@ -1,0 +1,8 @@
+node_modules
+logs
+app/config/data
+.nyc_output
+local_cert.crt
+local_key.key
+localhost_certs.pem
+coverage

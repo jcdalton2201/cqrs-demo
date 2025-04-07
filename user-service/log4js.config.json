@@ -1,0 +1,23 @@
+
+    {
+      "appenders": {
+        "out":{"type":"console"},
+        "task":{
+          "type": "file",
+          "filename": "logs/orion-bff.log",
+          "maxLogSize": 20480,
+          "backups": 5
+        }
+      },
+      "categories":{
+        "default":{
+          "appenders": ["out","task"],
+          "level":"debug"
+        },
+        "task":{
+          "appenders": ["task"],
+          "level":"debug"
+        }
+      }
+    }
+    
