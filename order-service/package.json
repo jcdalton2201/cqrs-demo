@@ -28,6 +28,7 @@
     "eslint-plugin-prettier": "^5.1.3",
     "log4js": "^6.9.1",
     "mocha": "^11.1.0",
+    "order-service": "file:",
     "pg": "^8.12.0",
     "replacestream": "^4.0.3",
     "restify": "^11.1.0",

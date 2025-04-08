@@ -43,25 +43,33 @@ export class AllEvents {
         const message = JSON.parse(msg);
         if(message.type === 'order.created'){
             const data = message.data;
-            if(!data.create_dt){
-                data.create_dt = new Date();
+
+            if(!data.created_at){
+                data.created_at = new Date();
+            } else {
+                data.created_at = new Date(data.created_at);
             }
             //get users
             const user = await this.pg.retrieve('demo.users',{id: data.user_id});
-            console.log(user);
+            console.log(data.user_id, data.created_at.getMonth() +1,data.created_at.getFullYear());
             //check for invoice
-            const invoice = await this.pg.getInvoice(data.user_id, data.create_dt.getMonth() +1,data.create_dt.getFullYear());
+            const invoice = await this.pg.getInvoice(data.user_id, data.created_at.getMonth() +1,data.created_at.getFullYear());
+            const myUser = {
+                description: data.description,
+                amount: data.amount,
+                purchase_dt: data.created_at
+            };
             if(invoice.length < 1){
                 const results = await this.pg.insert('demo.invoices',{
                     user_id: data.user_id,
-                    invoice_dt:data.create_dt,
-                    orders:JSON.stringify([data]),
+                    invoice_dt:data.created_at,
+                    orders:JSON.stringify([myUser]),
                     total: data.amount,
                     email:user[0].email
                 });
             }else {
                 const item = invoice[0];
-                const newOrders = [...item.orders, data];
+                const newOrders = [...item.orders, myUser];
                 const results = await this.pg.updateOne('demo.invoices',item.id,{
                     orders:JSON.stringify(newOrders),
                     total: parseFloat(item.total) + parseFloat(data.amount)

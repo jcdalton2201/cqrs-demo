@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS demo.invoices
     invoice_dt date,
     orders jsonb,
     total double precision,
+    email text,
     CONSTRAINT invoices_pkey PRIMARY KEY (id)
 )
 
