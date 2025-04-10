@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS demo.invoices
     orders jsonb,
     total double precision,
     email text,
+    shipping_address text,
     CONSTRAINT invoices_pkey PRIMARY KEY (id)
 )
 
@@ -64,3 +65,23 @@ CREATE INDEX IF NOT EXISTS idx_invoices_userid_invoicedt
 
 CREATE INDEX idx_invoices_userid_invoicedt
     ON demo.invoices (user_id, invoice_dt);
+
+CREATE TABLE IF NOT EXISTS demo.accounts
+(
+    id uuid NOT NULL DEFAULT gen_random_uuid(),
+    user_id uuid,
+    address1 text,
+    city text,
+    state text,
+    zip text,
+    status text NOT NULL DEFAULT 'open',
+    CONSTRAINT account_pkey PRIMARY KEY (id)
+)
+
+CREATE TABLE IF NOT EXISTS demo.invoice_account
+(
+    user_id uuid,
+    email text
+    shipping_address jsonb
+    CONSTRAINT account_pkey PRIMARY KEY (user_id)
+)

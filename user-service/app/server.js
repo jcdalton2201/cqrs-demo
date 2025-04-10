@@ -6,6 +6,7 @@ import Setup from './config/setup-context.js';
 import os from 'os';
 import { Healthcheck } from './routes/health-check/health-check.js';
 import { UsersRoutes } from './routes/users/users-route.js';
+import { AccountsRoutes } from './routes/account/accounts-route.js';
 
 
 /**
@@ -90,6 +91,7 @@ init().then(() => {
      */
     new Healthcheck(server);
     new UsersRoutes(server);
+    new AccountsRoutes(server);
     
 
 });

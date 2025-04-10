@@ -25,4 +25,12 @@ export class UserEvents {
         };
         channel.sendToQueue('user',Buffer.from(JSON.stringify(event)));
       }
+    async publishAccountCreated(account){
+        const channel = this.rabbitMq.channel;
+        const event = {
+          type: 'account.created',
+          data: account
+        };
+        channel.sendToQueue('account',Buffer.from(JSON.stringify(event)));
+    }
 }

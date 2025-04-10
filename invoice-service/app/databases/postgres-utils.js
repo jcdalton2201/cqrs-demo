@@ -29,7 +29,26 @@ export class PostgresUtils {
             }
         }
         let updateQuery = this.buildWhere(query);
+        console.log(`SELECT * FROM ${table}${updateQuery} ${join} ${orderByStr} ${limitStr} ${offsetStr}`);
         const results = await this.client.query(`SELECT * FROM ${table}${updateQuery} ${join} ${orderByStr} ${limitStr} ${offsetStr}`);
+        return results.rows;
+    }
+    async retrieveInvoiceAccount(table, query, limit, offset, order_by){
+        let where ='';
+        let join = '';
+        let limitStr = limit ? `LIMIT ${limit}` : '';
+        let offsetStr = offset ? `OFFSET ${offset}` : '';
+        let orderByStr = order_by ? `ORDER BY ${order_by}` : '';
+        if (query){
+            if(query.user_id){
+                where = ` WHERE user_id = '${query.user_id}'`
+            }
+            if(query.join){
+                join = query.join;
+            }
+        }
+        console.log(`SELECT * FROM ${table}${where} ${join} ${orderByStr} ${limitStr} ${offsetStr}`);
+        const results = await this.client.query(`SELECT * FROM ${table}${where} ${join} ${orderByStr} ${limitStr} ${offsetStr}`);
         return results.rows;
     }
     async getInvoice(userid, month, year){
@@ -43,6 +62,33 @@ export class PostgresUtils {
         try {
             const insertResult = await this.client.query(insertQuery, values);
             return insertResult.rows[0];
+        } catch (error) {
+            this.logger.error(error);
+        }
+    }
+    async updateInvoiceAccount(table, id, data) {
+        if (!id) {
+            id = uuidv4();
+        }
+        const record = {
+            user_id:id,
+            ...data,
+        };
+        let insertQuery = this.buildInsert(table, record);
+        let updateQuery = this.buildUpdate(table, record);
+
+        let values = this.buildValues(record);
+        try {
+            const results = await this.client.query(updateQuery, values);
+            if (results.rowCount > 0) {
+                return record;
+            } else {
+                const insertResult = await this.client.query(
+                    insertQuery,
+                    values,
+                );
+                return insertResult.rows[0];
+            }
         } catch (error) {
             this.logger.error(error);
         }

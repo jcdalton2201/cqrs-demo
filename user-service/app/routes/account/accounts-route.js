@@ -1,25 +1,25 @@
 import { BaseRoute } from '../baseRoute.js';
-export class UsersRoutes extends BaseRoute {
+export class AccountsRoutes extends BaseRoute {
     constructor(server) {
         super(server);
-        this.bindMethods(['getUsers','createUsers']);
+        this.bindMethods(['getAccounts','createAccounts']);
         this.createRoutes();
     }
     createGets() {
-        this.server.get(`${this.baseRoute}/users`, this.getUsers);
+        this.server.get(`${this.baseRoute}/accounts`, this.getAccounts);
     }
     createPost() {
-        this.server.post(`${this.baseRoute}/users`, this.createUsers);
+        this.server.post(`${this.baseRoute}/accounts`, this.createAccounts);
     }
     createPuts() {}
     createDel() {}
-    async createUsers(req, res) {
+    async createAccounts(req, res) {
         const body = req.body;
-        const user = await this.pg.insert('demo.users',body);
-        await this.userEvents.publishUserCreated(user);
-        res.json(user);
+        await this.pg.insert('demo.accounts',body);
+        await this.userEvents.publishAccountCreated(body);
+        res.json(body);
     }
-    async getUsers(req, res) {
+    async getAccounts(req, res) {
         let query = {};
         let limit, offset, order_by;
         try {
@@ -42,7 +42,7 @@ export class UsersRoutes extends BaseRoute {
                 query = { ...query, ...req.query}
                 
             }
-            const results = await this.pg.retrieve('demo.users',query,limit,offset,order_by);
+            const results = await this.pg.retrieve('demo.accounts',query,limit,offset,order_by);
             if(req.params.id){
                 res.json(results[0]);
             } else {
