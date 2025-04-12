@@ -64,7 +64,10 @@ It simulates a simple e-commerce scenario with:
 
 ### 1. Create User
 
-- **API**: `POST /system-api/users`
+- **API**: `POST /user-service/users`
+  {name: "some name",
+   eamil:"some.name@company.com
+   }
 - **DB**: Saves to `demo.users`
 - **Event**: Publishes `user.created` with `{ id, name, email }`
 - **Invoice Service**:
@@ -75,7 +78,14 @@ It simulates a simple e-commerce scenario with:
 
 ### 2. Create Account
 
-- **API**: `POST /system-api/accounts`
+- **API**: `POST /user-service/accounts`
+  {
+    user_id: "",
+    address1:"",
+    city:"",
+    state:"",
+    zip:""
+  }
 - **DB**: Saves to `demo.accounts`
 - **Event**: Publishes `account.created` with address details
 - **Invoice Service**:
@@ -87,6 +97,11 @@ It simulates a simple e-commerce scenario with:
 ### 3. Create Order
 
 - **API**: `POST /order-service/orders`
+  {
+    user_id:"",
+    description:"",
+    amount:""
+  }
 - **DB**: Saves to `demo.orders`
 - **Event**: Publishes `order.created` with order metadata
 - **Invoice Service**:
