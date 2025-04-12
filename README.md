@@ -175,20 +175,6 @@ app/
 
 ---
 
-## 🧩 Future Enhancements
-
-Here are some ideas to make the CQRS demo more robust:
-
-| Idea                         | Benefit                                      |
-|------------------------------|----------------------------------------------|
-| Add **Event Replay** logic   | Helps replay or recover from failures       |
-| Use **Protobuf or Avro**     | For strict event typing and evolution       |
-| Integrate **Kafka**          | More durable and scalable event backbone    |
-| Add **Audit/Event Store**    | Enables full **event sourcing**             |
-| Add **Saga Pattern**         | Support for distributed transactions        |
-| Separate Read DB (Mongo/ES)  | High-speed queries on JSONB or NoSQL        |
-
----
 
 ## 📣 Summary
 
