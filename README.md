@@ -1,7 +1,3 @@
-Certainly. Below is an **expanded and detailed version** of the documentation for your **CQRS Demo**, now including deeper insights into architectural patterns, data flow, use cases, and technology rationale.
-
----
-
 # 🧩 CQRS Demo – Architecture & Documentation
 
 ## 🧠 What is CQRS?
@@ -203,7 +199,3 @@ This project demonstrates a **realistic mini-ecosystem** for CQRS, where:
 - **RabbitMQ** glues the services together via asynchronous event handling.
 
 The demo illustrates **scalability**, **autonomy**, and **event-driven processing**—key principles for modern, resilient microservices architecture.
-
----
-
-Let me know if you'd like to turn this into a rendered HTML document or a formal PDF whitepaper.
